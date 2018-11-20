@@ -66,7 +66,8 @@ class ArticlesController < ApplicationController
     @default_category = params[:category_id]
     @article.category_id = params[:category_id]
     @article.version = params[:version]
-    
+    @article.limited = false
+
     # Prefill with critical tags
     if redmine_knowledgebase_settings_value(:critical_tags)
           @article.tag_list = redmine_knowledgebase_settings_value(:critical_tags).split(/\s*,\s*/)
@@ -90,6 +91,7 @@ class ArticlesController < ApplicationController
     @article.category_id = params[:category_id]
     @article.author_id = User.current.id
     @article.project_id = KbCategory.find(params[:category_id]).project_id
+    @article.limited = params[:limited]
     @categories = @project.categories.all
     # don't keep previous comment
     @article.version_comments = params[:article][:version_comments]
@@ -104,6 +106,12 @@ class ArticlesController < ApplicationController
   end
 
   def show
+
+    if not @article.readable_by?(User.current)
+      render_403
+      return false
+    end
+
     @article.view request.remote_ip, User.current
     @attachments = @article.attachments.all.sort_by(&:created_on)
     @comments = @article.comments
@@ -146,6 +154,7 @@ class ArticlesController < ApplicationController
     # don't keep previous comment
     @article.version_comments = nil
     @article.version_comments = params[:article][:version_comments]
+    @article.limited = params[:article][:limited]
     if @article.update_attributes(params[:article])
       attachments = attach(@article, params[:attachments])
       flash[:notice] = l(:label_article_updated)

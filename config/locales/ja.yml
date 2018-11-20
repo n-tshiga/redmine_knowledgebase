@@ -64,6 +64,7 @@ ja:
   label_title_category: カテゴリ
   label_unrated_article: Unrated
   label_updated_who: "%{updater}によって%{age}に更新"
+  label_limited: 限定
   message_no_articles: ナレッジベースに追加された記事はありません．早速作りましょう！
   message_no_categories: 定義されたカテゴリがありません．新しいカテゴリを作成するにはログインする必要があります．
   message_no_permissions: 記事やカテゴリの閲覧権限がありません．管理者にお問い合わせください．
@@ -85,6 +86,7 @@ ja:
   permission_view_top_rated_articles: トップレート記事の閲覧
   permission_watch_articles: 記事のウォッチ
   permission_watch_categories: カテゴリのウォッチ
+  permission_view_limited_articles: 限定記事の閲覧
   project_module_knowledgebase: ナレッジベース
   show_article_without_tabs: "TABなしの記事を表示しますか?"
   show_attachments_first: "記事の前に添付ファイルを表示しますか?"

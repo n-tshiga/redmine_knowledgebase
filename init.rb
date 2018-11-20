@@ -90,6 +90,10 @@ Redmine::Plugin.register :redmine_knowledgebase do
     permission :manage_article_history, {
       :articles => [:diff, :version, :revert]
     }
+    permission :view_limited_articles, {
+      :articles   => [:index, :show, :tagged, :authored],
+      :categories => [:index, :show]
+    }
   end
 
   menu :project_menu, :articles, { :controller => 'articles', :action => 'index' }, :caption => :knowledgebase_title, :after => :activity, :param => :project_id

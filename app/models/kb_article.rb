@@ -74,6 +74,18 @@ class KbArticle < ActiveRecord::Base
     notified.collect(&:mail)
   end
 
+  def readable_by?(user = User.current)
+    if self.limited
+      if user.allowed_to?(:view_limited_articles, self.project) || (self.author_id == user.id)
+        return true
+      else
+        return false
+      end
+    end
+
+    return true
+  end
+
   def editable_by?(user = User.current)
     return user.allowed_to?(:edit_articles, self.project) ||
       user.allowed_to?(:manage_articles, self.project) ||
